@@ -21,7 +21,7 @@ public class Fourmis {
             while (j < ui.length() && ui.charAt(i) == ui.charAt(j)) { //On doit compter pour le chiffre i son nombre d'occurences, c'est le rôle de j
                 j++;
             }
-            resultat += (j - i) + "" + ui.charAt(i); //Ici, le calcul permet de noter combien j de fois le nombre i apparait
+            resultat += (j - i) + "" + ui.charAt(i); //Ici, le calcul permet de noter combien j de fois le nombre i apparait + le nombre i en question. (Exemple: 3 fois le nombre 1 = 3+1 = 31)
             i = j; //Évite de re-traverser la chaîne de caractères, et va directement à la prochaine occurence.
         }
         return resultat;
