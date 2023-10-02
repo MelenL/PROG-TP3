@@ -1,11 +1,8 @@
 import java.util.Scanner;
 
 public class InsertionInteger {
-    
+
     private static final int SIZE_MAX = 10;
-    /**
-     * nombre d'entiers présents dans t, 0 <= size <= SIZE_MAX
-     */
     private int size;
     private int[] array = new int[SIZE_MAX];
 
@@ -13,75 +10,89 @@ public class InsertionInteger {
         size = 0; // Initialiser la taille à 0 lorsque l'objet est créé
     }
 
-    /**
-     * @return copie de la partie remplie du tableau
-     */
     public int[] toArray() {
-        //TODO
+        int[] tableauDistincts = new int[size];
+        int taille = 0;
+
+        // Copier les entiers distincts dans un nouveau tableau
+        for (int i = 0; i < size; i++) {
+            if (!contains(tableauDistincts, taille, array[i])) {
+                tableauDistincts[taille] = array[i];
+                taille++;
+            }
+        }
+
+        // Trier manuellement le tableau distinctArray
+        triTableau(tableauDistincts, taille);
+
+        return tableauDistincts;
     }
 
-    /**
-     * Si x n'appartient pas à array[0..size-1] et size < SIZE_MAX,
-     * size est incrémenté de 1, x est inséré dans array et les
-     * entiers array[0..size] sont triés par ordre croissant.
-     * Sinon array est inchangé.
-     * 
-     * Exemple :
-     * pour x = 5, size = 3, array[0] = 1, array[1] = 6, array[2] = 8
-     * insertion délivre true, size=4,
-     * array[0] = 1; array[1] = 5, array[2] = 6, array[3] = 8
-     * 
-     * @param value
-     *        valeur à insérer
-     * @pre   les valeurs de array[0..size-1] sont triées par ordre croissant
-     * @return false si x appartient à array[0..size-1] ou si
-     *         array est complétement rempli;
-     *         true si x n'appartient pas à array[0..size-1]
-     */
     public boolean insert(int value) {
-        //On vérifie que la taille est bien inférieure à la taille maximale SIZE_MAX
-        if (size < SIZE_MAX) {
-            //On vérifie que la valeur n'est pas déjà présente dans le tableau
-            if (!contains(array, value)) {
-                return true;
-            }
-            return false;
+        if (size < SIZE_MAX && !contains(array, size, value)) {
+            array[size] = value; // Insérer la valeur à la fin du tableau
+            size++; // Incrémenter la taille
+            return true;
         }
         return false;
     }
-    
-    /**
-     * array est rempli, par ordre croissant, en utilisant la fonction
-     * insert avec les valeurs lues par scanner.
-     * 
-     * @param scanner
-     */
-    public void createArray(Scanner scanner) {
-        //TODO
+
+    public void createArrayFromString(String input) {
+        for (char c : input.toCharArray()) {
+            int value = Character.getNumericValue(c);
+            insert(value);
+        }
     }
 
     @Override
     public String toString() {
-        //TODO
+        int[] sortedArray = toArray();
+        StringBuilder sb = new StringBuilder();
+        sb.append("[");
+        for (int i = 0; i < sortedArray.length; i++) {
+            sb.append(sortedArray[i]);
+            if (i < sortedArray.length - 1) {
+                sb.append(", ");
+            }
+        }
+        sb.append("]");
+        return sb.toString();
     }
 
-    //////////MÉTHODES SOUS-FONCTIONNEL ÉCRITE EN PLUS//////////
-
-    /**
-     * @param array le tableau contenant oui ou non la valeur
-     * @param value la valeur à chercher
-     * @return true si la valeur est présente dans le tableau, false sinon 
-     */
-    public boolean contains(int[] array, int value) {
-        for (int i = 0; i < array.length; i++) {
-            if (array[i] == value) {
+    // Vérifie si une valeur existe dans le tableau jusqu'à la taille donnée
+    private boolean contains(int[] arr, int size, int value) {
+        for (int i = 0; i < size; i++) {
+            if (arr[i] == value) {
                 return true;
             }
         }
         return false;
     }
 
-    ////////////////////////////////////////////////////////////
-    
+    // Tri manuel du tableau en utilisant tri par insertion
+    private void triTableau(int[] arr, int length) {
+        for (int i = 1; i < length; i++) {
+            int key = arr[i];
+            int j = i - 1;
+            while (j >= 0 && arr[j] > key) {
+                arr[j + 1] = arr[j];
+                j = j - 1;
+            }
+            arr[j + 1] = key;
+        }
+    }
 
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.print("Entrez une suite de chiffres (terminez par -1) : ");
+        String input = scanner.nextLine();
+        scanner.close();
+
+        InsertionInteger insertionInteger = new InsertionInteger();
+
+        insertionInteger.createArrayFromString(input);
+
+        System.out.println("Liste triée des entiers distincts : " + insertionInteger.toString());
+    }
 }
