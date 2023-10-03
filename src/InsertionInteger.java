@@ -37,26 +37,28 @@ public class InsertionInteger {
         return false;
     }
 
-    public void ArraytoString(String input) {
-        for (char c : input.toCharArray()) {
-            int value = Character.getNumericValue(c);
-            insert(value);
+    public void StringToArray(String input) {
+        for (int i = 0; i < input.length(); i++) {
+            char c = input.charAt(i);
+            if (c >= '0' && c <= '9') {
+                int value = c-'0'; //Convertir le caractère en entier et d'avoir la valeur numérique du caractères C.
+                insert(value); //On vérifie que on peut le mettre dans le tableau et qu'il n'existe pas déjà.
+            }
         }
     }
 
     @Override
     public String toString() {
-        int[] sortedArray = toArray();
-        StringBuilder sb = new StringBuilder();
-        sb.append("[");
-        for (int i = 0; i < sortedArray.length; i++) {
-            sb.append(sortedArray[i]);
-            if (i < sortedArray.length - 1) {
-                sb.append(", ");
+        int[] arraytrier = toArray();
+        String result = "[";
+        for (int i = 0; i < arraytrier.length; i++) {
+            result += arraytrier[i];
+            if (i < arraytrier.length - 1) {
+                result += ", ";
             }
         }
-        sb.append("]");
-        return sb.toString();
+        result += "]";
+        return result;
     }
 
     // Vérifie si une valeur existe dans le tableau jusqu'à la taille donnée
@@ -96,8 +98,8 @@ public class InsertionInteger {
 
         InsertionInteger insertionInteger = new InsertionInteger(); //On créer notre objet.
 
-        insertionInteger.ArraytoString(input);
+        insertionInteger.StringToArray(input); //On créer notre array à partir de la string.
 
-        System.out.println("Liste triée des entiers distincts : " + insertionInteger.toString());
+        System.out.println("Liste triée des entiers distincts : " + insertionInteger.toString()); //On affiche notre Array.
     }
 }
