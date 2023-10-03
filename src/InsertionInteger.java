@@ -23,7 +23,7 @@ public class InsertionInteger {
         }
 
         // Trier manuellement le tableau distinctArray
-        triTableau(tableauDistincts, taille);
+        triTableau(tableauDistincts);
 
         return tableauDistincts;
     }
@@ -37,7 +37,7 @@ public class InsertionInteger {
         return false;
     }
 
-    public void createArrayFromString(String input) {
+    public void ArraytoString(String input) {
         for (char c : input.toCharArray()) {
             int value = Character.getNumericValue(c);
             insert(value);
@@ -70,28 +70,33 @@ public class InsertionInteger {
     }
 
     // Tri manuel du tableau en utilisant tri par insertion
-    private void triTableau(int[] arr, int length) {
-        for (int i = 1; i < length; i++) {
-            int key = arr[i];
-            int j = i - 1;
-            while (j >= 0 && arr[j] > key) {
-                arr[j + 1] = arr[j];
-                j = j - 1;
-            }
-            arr[j + 1] = key;
-        }
+    private void triTableau(int[] tab) {
+        int taille = tab.length;  
+        
+        for (int i = 1; i < taille; i++)
+        { 
+             int index = tab[i];  
+             int j = i-1;  
+          
+             while(j >= 0 && tab[j] > index)  
+             {
+                  tab[j+1] = tab[j];  
+                  j--;  
+             }  
+             tab[j+1] = index; 
+      }  
     }
 
     public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
+        Scanner scanner = new Scanner(System.in); //On ouvre notre scanner.
 
-        System.out.print("Entrez une suite de chiffres (terminez par -1) : ");
-        String input = scanner.nextLine();
+        System.out.print("Entrez une suite de chiffres (terminez par -1) : "); 
+        String input = scanner.nextLine(); //On récupère la suite à trier par ordre croissant et entiers distincs.                                 
         scanner.close();
 
-        InsertionInteger insertionInteger = new InsertionInteger();
+        InsertionInteger insertionInteger = new InsertionInteger(); //On créer notre objet.
 
-        insertionInteger.createArrayFromString(input);
+        insertionInteger.ArraytoString(input);
 
         System.out.println("Liste triée des entiers distincts : " + insertionInteger.toString());
     }
